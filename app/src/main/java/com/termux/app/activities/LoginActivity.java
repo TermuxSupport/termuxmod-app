@@ -36,24 +36,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .requestProfile()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         mProgressBar = findViewById(R.id.login_progress);
         mSignInButton = findViewById(R.id.btn_google_sign_in);
 
-        mSignInButton.setOnClickListener(v -> signIn());
+        try {
+            mAuth = FirebaseAuth.getInstance();
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .requestProfile()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+            mSignInButton.setOnClickListener(v -> signIn());
+        } catch (Exception e) {
+            mSignInButton.setEnabled(false);
+            Toast.makeText(this, "Google Sign-In tidak dikonfigurasi: " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (mAuth == null) return;
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             goToMain();
@@ -61,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn() {
+        if (mGoogleSignInClient == null) {
+            Toast.makeText(this, "Google Sign-In belum dikonfigurasi", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mSignInButton.setEnabled(false);
         mProgressBar.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -85,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        if (mAuth == null) return;
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {

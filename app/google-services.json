@@ -12,7 +12,12 @@
           "package_name": "com.termux"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "463052049793-pfdh3g440cvmr6jvb7mk72vdfh0u7gc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAM7l4d-OHzjEAxvAmMFABlyFV2DWWyjJQ"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463052049793-pfdh3g440cvmr6jvb7mk72vdfh0u7gc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

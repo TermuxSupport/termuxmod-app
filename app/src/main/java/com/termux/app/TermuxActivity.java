@@ -186,6 +186,23 @@ public final class TermuxActivity extends Activity implements ServiceConnection 
         Logger.logDebug(LOG_TAG, "onCreate");
         isOnResumeAfterOnCreate = true;
 
+        // Check Firebase auth FIRST before any heavy initialization.
+        // If user is not logged in, redirect to LoginActivity immediately
+        // without starting TermuxService (which is heavy and would crash in background).
+        try {
+            com.google.firebase.auth.FirebaseUser earlyUser =
+                com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+            if (earlyUser == null) {
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginIntent);
+                finish();
+                return;
+            }
+        } catch (Exception e) {
+            Logger.logWarn(LOG_TAG, "Firebase auth check failed, continuing without auth: " + e.getMessage());
+        }
+
         // Check if a crash happened on last run of the app and show a
         // notification with the crash details if it did
         CrashUtils.notifyAppCrashOnLastRun(this, LOG_TAG);
