@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">463052049793-placeholder.apps.googleusercontent.com</string>
+    <string name="google_app_id" translatable="false">1:463052049793:android:6842163a2a5e2ce8bc6c80</string>
+    <string name="google_api_key" translatable="false">AIzaSyAM7l4d-OHzjEAxvAmMFABlyFV2DWWyjJQ</string>
+    <string name="google_storage_bucket" translatable="false">termuxmod-app.firebasestorage.app</string>
+    <string name="project_id" translatable="false">termuxmod-app</string>
+    <string name="gcm_defaultSenderId" translatable="false">463052049793</string>
+</resources>
