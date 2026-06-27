@@ -38,7 +38,11 @@ import com.termux.shared.data.DataUtils;
 import com.termux.shared.termux.TermuxConstants;
 import com.termux.shared.termux.TermuxConstants.TERMUX_APP.TERMUX_ACTIVITY;
 import com.termux.app.activities.HelpActivity;
+import com.termux.app.activities.LoginActivity;
+import com.termux.app.activities.ProfileActivity;
 import com.termux.app.activities.SettingsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.termux.shared.settings.preferences.TermuxAppSharedPreferences;
 import com.termux.app.terminal.TermuxSessionsListViewController;
 import com.termux.app.terminal.io.TerminalToolbarViewPager;
@@ -232,6 +236,8 @@ public final class TermuxActivity extends Activity implements ServiceConnection 
 
         setSettingsButtonView();
 
+        setProfileButtonView();
+
         setNewSessionButtonView();
 
         setToggleKeyboardView();
@@ -259,6 +265,15 @@ public final class TermuxActivity extends Activity implements ServiceConnection 
         Logger.logDebug(LOG_TAG, "onStart");
 
         if (mIsInvalidState) return;
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(loginIntent);
+            finish();
+            return;
+        }
 
         mIsVisible = true;
 
@@ -525,6 +540,15 @@ public final class TermuxActivity extends Activity implements ServiceConnection 
         settingsButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
         });
+    }
+
+    private void setProfileButtonView() {
+        ImageButton profileButton = findViewById(R.id.profile_button);
+        if (profileButton != null) {
+            profileButton.setOnClickListener(v -> {
+                startActivity(new Intent(this, ProfileActivity.class));
+            });
+        }
     }
 
     private void setNewSessionButtonView() {

@@ -226,4 +226,28 @@
     <!-- Donate Preference -->
     <string name="donate_preference_title">Donate</string>
 
+
+
+    <!-- Google Login -->
+    <string name="login_title">Sign In</string>
+    <string name="login_subtitle">Sign in with your Google account to continue</string>
+    <string name="login_google_button">Sign in with Google</string>
+    <string name="login_failed">Sign in failed. Please try again.</string>
+
+    <!-- Profile -->
+    <string name="profile_title">My Profile</string>
+    <string name="profile_sign_out">Sign Out</string>
+    <string name="profile_sign_out_confirm">Are you sure you want to sign out?</string>
+    <string name="profile_signed_out">Signed out successfully</string>
+    <string name="action_open_profile">Profile</string>
+
+    <!-- Device Info -->
+    <string name="device_info_title">DEVICE INFORMATION</string>
+    <string name="device_label_model">Model</string>
+    <string name="device_label_brand">Brand / Manufacturer</string>
+    <string name="device_label_android">Android Version</string>
+    <string name="device_label_arch">Architecture</string>
+    <string name="device_label_id">Device ID</string>
+    <string name="device_label_language">Language</string>
+
 </resources>
